@@ -24,7 +24,7 @@ app.get('/', async (req, res) => {
     console.log(`Received prompt: ${prompt}`);
 
     const output = await replicate.run(
-      'nightmareai/disco-diffusion:3c128f652e9f24e72896ac0b019e47facfd6bccf93104d50f09f1f2196325507',
+      'fofr/latent-consistency-model:683d19dc312f7a9f0428b04429a9ccefd28dbf7785fef083ad5cf991b65f406f',
       { input: { prompt } }
     );
 
