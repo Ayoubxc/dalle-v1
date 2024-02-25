@@ -13,7 +13,7 @@ const replicate = new Replicate({   auth: "r8_6yGN7OMnvt84GFFL03hsS0QIZPT76wX3Ip
 
 app.use(express.json());
 
-app.get('/disco/diffusion', async (req, res) => {
+app.get('/', async (req, res) => {
   try {
     const { prompt } = req.query;
 
