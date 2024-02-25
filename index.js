@@ -13,7 +13,7 @@ const replicate = new Replicate({   auth: "r8_6yGN7OMnvt84GFFL03hsS0QIZPT76wX3Ip
 
 app.use(express.json());
 
-app.get('/', async (req, res) => {
+app.get('/disco/diffusion', async (req, res) => {
   try {
     const { prompt } = req.query;
 
@@ -24,7 +24,7 @@ app.get('/', async (req, res) => {
     console.log(`Received prompt: ${prompt}`);
 
     const output = await replicate.run(
-      'lucataco/open-dalle-v1.1:1c7d4c8dec39c7306df7794b28419078cb9d18b9213ab1c21fdc46a1deca0144',
+      'nightmareai/disco-diffusion:3c128f652e9f24e72896ac0b019e47facfd6bccf93104d50f09f1f2196325507',
       { input: { prompt } }
     );
 
