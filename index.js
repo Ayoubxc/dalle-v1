@@ -1,4 +1,3 @@
-
 const express = require('express');
 const Replicate = require('replicate');
 const dotenv = require('dotenv');
@@ -13,22 +12,29 @@ const replicate = new Replicate({   auth: "r8_6yGN7OMnvt84GFFL03hsS0QIZPT76wX3Ip
 
 app.use(express.json());
 
-app.get('/', async (req, res) => {
+app.get('/text-to-speech', async (req, res) => {
   try {
-    const { prompt } = req.query;
+    const { text, speaker, language, cleanup_voice } = req.query;
 
-    if (!prompt) {
-      return res.status(400).json({ error: 'Prompt is required' });
+    if (!text) {
+      return res.status(400).json({ error: 'Text is required' });
     }
 
-    console.log(`Received prompt: ${prompt}`);
+    console.log(`Received text: ${text}`);
 
     const output = await replicate.run(
-      'fofr/latent-consistency-model:683d19dc312f7a9f0428b04429a9ccefd28dbf7785fef083ad5cf991b65f406f',
-      { input: { prompt } }
+      'lucataco/xtts-v2:684bc3855b37866c0c65add2ff39c78f3dea3f4ff103a436465326e0f438d55e',
+      {
+        input: {
+          text,
+          speaker,
+          language,
+          cleanup_voice: cleanup_voice === 'true',
+        },
+      }
     );
 
-    console.log(`Response for prompt "${prompt}":`, output);
+    console.log(`Response for text "${text}":`, output);
 
     return res.json({ result: output });
   } catch (error) {
