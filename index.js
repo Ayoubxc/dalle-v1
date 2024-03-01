@@ -6,6 +6,10 @@ const app = express();
 const replicate = new Replicate({
   auth: "r8_6yGN7OMnvt84GFFL03hsS0QIZPT76wX3IpKef",
 });
+
+// معالجة طلبات favicon.ico
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 app.get('/generate-audio', async (req, res) => {
   try {
     const { text } = querystring.parse(req.url.split('?')[1]);
