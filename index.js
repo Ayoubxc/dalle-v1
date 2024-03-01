@@ -7,13 +7,13 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-const replicate = new Replicate({   auth: "r8_6yGN7OMnvt84GFFL03hsS0QIZPT76wX3IpKef",
-});
+const replicate = new Replicate({ auth: "r8_6yGN7OMnvt84GFFL03hsS0QIZPT76wX3IpKef" });
+
 app.use(express.json());
 
-app.post('/text-to-speech', async (req, res) => {
+app.get('/', async (req, res) => {
   try {
-    const { text } = req.body;
+    const { text, speaker, language, cleanup_voice } = req.query;
 
     if (!text) {
       return res.status(400).json({ error: 'Text is required' });
@@ -26,8 +26,9 @@ app.post('/text-to-speech', async (req, res) => {
       {
         input: {
           text,
-          language: 'ar',
-          cleanup_voice: false,
+          speaker,
+          language,
+          cleanup_voice: cleanup_voice === 'true',
         },
       }
     );
