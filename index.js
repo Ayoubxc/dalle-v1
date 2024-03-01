@@ -9,12 +9,11 @@ const port = process.env.PORT || 3000;
 
 const replicate = new Replicate({   auth: "r8_6yGN7OMnvt84GFFL03hsS0QIZPT76wX3IpKef",
 });
-
 app.use(express.json());
 
-app.get('/text-to-speech', async (req, res) => {
+app.post('/text-to-speech', async (req, res) => {
   try {
-    const { text, speaker, language, cleanup_voice } = req.query;
+    const { text } = req.body;
 
     if (!text) {
       return res.status(400).json({ error: 'Text is required' });
@@ -27,9 +26,8 @@ app.get('/text-to-speech', async (req, res) => {
       {
         input: {
           text,
-          speaker,
-          language,
-          cleanup_voice: cleanup_voice === 'true',
+          language: 'ar',
+          cleanup_voice: false,
         },
       }
     );
