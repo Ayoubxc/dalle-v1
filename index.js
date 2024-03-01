@@ -1,6 +1,6 @@
 const express = require('express');
 const Replicate = require('replicate');
-const querystring = require('querystring');
+const url = require('url');
 
 const app = express();
 const replicate = new Replicate({
@@ -12,7 +12,8 @@ app.get('/favicon.ico', (req, res) => res.status(204));
 
 app.get('/generate-audio', async (req, res) => {
   try {
-    const { text } = querystring.parse(req.url.split('?')[1]);
+    const queryObject = url.parse(req.url,true).query;
+    const text = queryObject.text;
     const output = await replicate.run(
       'lucataco/xtts-v2:684bc3855b37866c0c65add2ff39c78f3dea3f4ff103a436465326e0f438d55e',
       {
