@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.get('/', async (req, res) => {
   try {
-    const { text, speaker, language, cleanup_voice } = req.query;
+    const { text, language } = req.query;
 
     if (!text) {
       return res.status(400).json({ error: 'Text is required' });
@@ -26,9 +26,8 @@ app.get('/', async (req, res) => {
       {
         input: {
           text,
-          speaker,
           language,
-          cleanup_voice: cleanup_voice === 'true',
+          cleanup_voice: false,
         },
       }
     );
