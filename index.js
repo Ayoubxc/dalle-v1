@@ -1,22 +1,21 @@
 const express = require('express');
 const Replicate = require('replicate');
+const querystring = require('querystring');
 
 const app = express();
 const replicate = new Replicate({
   auth: "r8_6yGN7OMnvt84GFFL03hsS0QIZPT76wX3IpKef",
 });
-
-app.post('/generate-audio', async (req, res) => {
+app.get('/generate-audio', async (req, res) => {
   try {
-    const { text, speaker, language, cleanup_voice } = req.body;
+    const { text } = querystring.parse(req.url.split('?')[1]);
     const output = await replicate.run(
       'lucataco/xtts-v2:684bc3855b37866c0c65add2ff39c78f3dea3f4ff103a436465326e0f438d55e',
       {
         input: {
           text,
-          speaker,
-          language,
-          cleanup_voice,
+          language: "en",
+          cleanup_voice: false
         },
       }
     );
