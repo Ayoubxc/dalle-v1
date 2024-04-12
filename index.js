@@ -3,7 +3,7 @@ const Replicate = require('replicate');
 
 const app = express();
 const replicate = new Replicate({
-  auth: "r8_VNqij5t59t9qpapPvwzpIuMNLbuyCxc3zgESG", // اسم متغير البيئة المحدد في Heroku
+  auth: "r8_VNqij5t59t9qpapPvwzpIuMNLbuyCxc3zgESG",
 });
 
 const PORT = process.env.PORT || 3000;
