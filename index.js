@@ -6,21 +6,19 @@ dotenv.config();
 
 const app = express();
 const replicate = new Replicate({
-  auth: "r8_MFTLjKSJhoVj6ovmhYslX8NZZGF5zsH2wYJAr",
+  auth: r8_VNqij5t59t9qpapPvwzpIuMNLbuyCxc3zgESG, // تحديد المفتاح من متغير البيئة
 });
 
 const PORT = process.env.PORT || 3000;
 
-app.get('/synthesize', async (req, res) => {
+app.post('/editImage', async (req, res) => {
   try {
     const output = await replicate.run(
-      "lucataco/xtts-v2:684bc3855b37866c0c65add2ff39c78f3dea3f4ff103a436465326e0f438d55e",
+      "timothybrooks/instruct-pix2pix:30c1d0b916a6f8efce20493f5d61ee27491ab2a60437c13c588468b9810ec23f",
       {
         input: {
-          text: req.query.text,
-          speaker: req.query.speaker,
-          language: req.query.language,
-          cleanup_voice: req.query.cleanup_voice
+          image: req.body.imageUrl,
+          prompt: req.body.text,
         }
       }
     );
