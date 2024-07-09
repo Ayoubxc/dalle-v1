@@ -3,19 +3,33 @@ const Replicate = require('replicate');
 
 const app = express();
 const replicate = new Replicate({
-  auth: "r8_VNqij5t59t9qpapPvwzpIuMNLbuyCxc3zgESG",
+  auth: "r8_IRa7if9DM8j0Hymq1MijtPWDmBfF8di2Ys5cV", // ضع مفتاح API هنا
 });
 
 const PORT = process.env.PORT || 3000;
 
-app.post('/editImage', async (req, res) => {
+app.use(express.json());
+
+app.post('/generateAnime', async (req, res) => {
   try {
+    const { image } = req.body;
+
+    if (!image) {
+      return res.status(400).json({ error: "Image URL is required" });
+    }
+
     const output = await replicate.run(
-      "timothybrooks/instruct-pix2pix:30c1d0b916a6f8efce20493f5d61ee27491ab2a60437c13c588468b9810ec23f",
+      "datong-new/anime:7d80ed77a21c6cb7addd13a6ef169d54a320f40aa060fc0efb76ba2d9c2ce782",
       {
         input: {
-          image: req.body.imageUrl,
-          prompt: req.body.text,
+          prompt: "a person",
+          image: image,
+          lora_scale: 1,
+          negative_prompt: "",
+          prompt_strength: 4.5,
+          denoising_strength: 0.65,
+          human_face_strength: 1,
+          control_depth_strength: 0.8
         }
       }
     );
